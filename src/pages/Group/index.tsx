@@ -40,9 +40,9 @@ const Group: React.FC = () => {
       <ul className="ranking-list">
         {playersFiltered.map((player, index) => (
           <li key={player.id} className="ranking-item">
-            <span className="ranking-position">{index + 1}º</span> {/* Posição no ranking */}
-            <span className="ranking-name">{player.name}</span> {/* Nome do jogador */}
-            <span className="ranking-points">{player.points} pontos</span> {/* Pontos */}
+            <span className="ranking-position">{index + 1}º</span>
+            <span className="ranking-name">{player.name}</span>
+            <span className="ranking-points">{player.points} pontos</span>
           </li>
         ))}
       </ul>

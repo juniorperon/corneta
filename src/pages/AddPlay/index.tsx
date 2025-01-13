@@ -14,6 +14,7 @@ const AddPlay: React.FC = () => {
 
   const group = groups.find((group) => group.id === groupId);
   const [playName, setPlayName] = useState('');
+  const [playPoint, setPlayPoint] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
 
   const handleSubmit = () => {
@@ -36,6 +37,13 @@ const AddPlay: React.FC = () => {
         onChange={(e) => setPlayName(e.target.value)}
       />
 
+      <input
+        type="number"
+        placeholder="Pontos da Jogada"
+        value={playPoint}
+        onChange={(e) => setPlayPoint(e.target.value)}
+      />
+
       <Button
         text="Adicionar Jogada"
         onClick={handleSubmit}
@@ -54,7 +62,8 @@ const AddPlay: React.FC = () => {
         {filteredPlays.length > 0 ? (
           filteredPlays.map((play) => (
             <li key={play.id} className="play-item">
-              {play.name}
+              <span>{play.name}</span>
+              <span>{play.points} pontos</span>
             </li>
           ))
         ) : (

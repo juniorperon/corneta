@@ -19,9 +19,11 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     { id: '3', name: 'Voleio', points: 8, groupId: '1' },
     { id: '4', name: 'Smash', points: 12, groupId: '2' },
     { id: '5', name: 'Erro não forçado', points: -5, groupId: '2' },
-    { id: '6', name: 'Ponto de Serviço', points: 10, groupId: '3' },
-    { id: '7', name: 'Falta no Serviço', points: -2, groupId: '3' },
-    { id: '8', name: 'Smash', points: 15, groupId: '3' },
+    { id: '6', name: 'A la isolada', points: -10, groupId: '3' },
+    { id: '7', name: 'Jogada trapalhões', points: -5, groupId: '3' },
+    { id: '8', name: 'Franguinho', points: -10, groupId: '3' },
+    { id: '9', name: 'Peixe na areia', points: -10, groupId: '3' },
+    { id: '10', name: 'Tirando a camiseta', points: -10, groupId: '3' },
   ]);
 
   const [players, setPlayers] = useState<Player[]>([
@@ -29,8 +31,19 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     { id: '2', name: 'Jogador 2', points: 200, groupId: '1' },
     { id: '3', name: 'Jogador 3', points: 300, groupId: '2' },
     { id: '4', name: 'Jogador 4', points: 400, groupId: '2' },
-    { id: '5', name: 'Jogador 5', points: 500, groupId: '3' },
-    { id: '6', name: 'Jogador 6', points: 600, groupId: '3' },
+    { id: '5', name: 'Lucas Metedieri', points: 500, groupId: '3' },
+    { id: '6', name: 'Sandro', points: 600, groupId: '3' },
+    { id: '7', name: 'Peron', points: 200, groupId: '3' },
+    { id: '8', name: 'João Brides', points: 200, groupId: '3' },
+    { id: '9', name: 'Gabriel Chiu', points: 200, groupId: '3' },
+    { id: '10', name: 'Giussepi', points: 200, groupId: '3' },
+    { id: '11', name: 'Leandro Moglia', points: 200, groupId: '3' },
+    { id: '12', name: 'Alisson Marchetta', points: 200, groupId: '3' },
+    { id: '13', name: 'Gustavo Melhorini', points: 200, groupId: '3' },
+    { id: '14', name: 'Leandro Tete', points: 200, groupId: '3' },
+    { id: '15', name: 'Rodrigo Mosca', points: 200, groupId: '3' },
+    { id: '16', name: 'Fefe', points: 200, groupId: '3' },
+    { id: '17', name: 'Enrico Versolato', points: 200, groupId: '3' },
   ]);
 
   const [groups, setGroups] = useState<Group[]>([
