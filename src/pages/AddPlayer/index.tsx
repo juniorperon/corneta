@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useAppContext } from '../../context/AppContext';
 import BackButton from '../../components/BackButton';
 import Button from '../../components/Button';
 import './styles.css';
-import { useAppContext } from '../../context/AppContext';
 
 const AddPlayer: React.FC = () => {
   const { groupId } = useParams();

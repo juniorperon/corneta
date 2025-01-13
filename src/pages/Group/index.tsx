@@ -31,8 +31,8 @@ const Group: React.FC = () => {
           onClick={() => navigate(`/add-play/${groupId}`)}
         />
         <Button
-          text="Ver Jogadas"
-          onClick={() => navigate(`/plays/${groupId}`)}
+          text="Adicionar Pontos"
+          onClick={() => navigate(`/add-points/${groupId}`)}
         />
       </div>
 

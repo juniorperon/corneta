@@ -7,6 +7,7 @@ interface AppContextData {
   players: Player[];
   addPlay: (play: Play, groupId: string) => void;
   getPlaysByGroup: (groupId: string) => Play[];
+  updatePlayerPoints: (playerId: string, points: number) => void;
 }
 
 const AppContext = createContext<AppContextData | undefined>(undefined);
@@ -81,12 +82,24 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     return plays.filter((play) => play.groupId === groupId);
   };
 
+  const updatePlayerPoints = (playerId: string, points: number) => {
+    setPlayers((prevPlayers) =>
+      prevPlayers.map((player) =>
+        player.id === playerId
+          ? { ...player, points: player.points + points }
+          : player
+      )
+    );
+  };
+
   return (
-    <AppContext.Provider value={{ groups, plays, players, addPlay, getPlaysByGroup }}>
+    <AppContext.Provider value={{ groups, plays, players, addPlay, getPlaysByGroup, updatePlayerPoints }}>
       {children}
     </AppContext.Provider>
   );
 };
+
+
 
 export const useAppContext = (): AppContextData => {
   const context = useContext(AppContext);

@@ -1,61 +1,68 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useAppContext } from '../../context/AppContext';
-import { Play } from '../../types';
 import BackButton from '../../components/BackButton';
+import Button from '../../components/Button';
+import './styles.css';
 
 const AddPlay: React.FC = () => {
+  const { groupId } = useParams();
   const navigate = useNavigate();
-  const { groups, addPlay, plays } = useAppContext();
-  const [selectedGroupId, setSelectedGroupId] = useState<string>('');
-  const [selectedPlay, setSelectedPlay] = useState<string>('');
+  const { groups, plays } = useAppContext();
 
-  const handleAddPlay = () => {
-    if (selectedGroupId && selectedPlay) {
-      const play = plays.find((p) => p.name === selectedPlay);
-      if (play) {
-        const newPlay: Play = {
-          id: `${Date.now()}`,
-          name: play.name,
-          points: play.points,
-          groupId: selectedGroupId,
-        };
-        addPlay(newPlay, selectedGroupId);
-      }
-    }
+  const playsFiltered = plays.filter((play) => play.groupId === groupId);
+
+  const group = groups.find((group) => group.id === groupId);
+  const [playName, setPlayName] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const handleSubmit = () => {
+    console.log(`Adicionando jogada: ${playName} ao grupo ${group?.name}`);
+    navigate(`/group/${groupId}`);
   };
 
+  const filteredPlays = playsFiltered.filter((play) =>
+    play.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
-    <div>
-      <h2>Adicionar Jogada</h2>
+    <div className="add-play-container">
+      <h1>Adicionar Jogada - {group?.name || ''}</h1>
+
+      <input
+        type="text"
+        placeholder="Nome da Jogada"
+        value={playName}
+        onChange={(e) => setPlayName(e.target.value)}
+      />
+
+      <Button
+        text="Adicionar Jogada"
+        onClick={handleSubmit}
+      />
+
+      <h2>Lista de Jogadas</h2>
+      <input
+        type="text"
+        placeholder="Pesquisar Jogada"
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+        className="search-input"
+      />
+
+      <ul className="play-list">
+        {filteredPlays.length > 0 ? (
+          filteredPlays.map((play) => (
+            <li key={play.id} className="play-item">
+              {play.name}
+            </li>
+          ))
+        ) : (
+          <li>Nenhuma jogada encontrada.</li>
+        )}
+      </ul>
 
       <BackButton onClick={() => navigate(-1)} />
-
-      <div>
-        <label>Grupo</label>
-        <select value={selectedGroupId} onChange={(e) => setSelectedGroupId(e.target.value)}>
-          <option value="">Selecione um grupo</option>
-          {groups.map((group) => (
-            <option key={group.id} value={group.id}>
-              {group.name}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      <div>
-        <label>Jogada</label>
-        <select value={selectedPlay} onChange={(e) => setSelectedPlay(e.target.value)}>
-          <option value="">Selecione uma jogada</option>
-          {plays.map((play) => (
-            <option key={play.name} value={play.name}>
-              {play.name} ({play.points} pontos)
-            </option>
-          ))}
-        </select>
-      </div>
-
-      <button onClick={handleAddPlay}>Adicionar Jogada</button>
     </div>
   );
 };
