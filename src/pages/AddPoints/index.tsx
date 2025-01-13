@@ -3,12 +3,13 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useAppContext } from '../../context/AppContext';
 import BackButton from '../../components/BackButton';
 import Button from '../../components/Button';
+import Select from '../../components/Select';
 import './styles.css';
 
 const AddPoints: React.FC = () => {
   const { groupId } = useParams();
   const navigate = useNavigate();
-  const { groups, plays, players, updatePlayerPoints } = useAppContext(); // Adicione a função para atualizar pontos
+  const { groups, plays, players, updatePlayerPoints } = useAppContext();
 
   const playsFiltered = plays.filter((play) => play.groupId === groupId);
   const playersFiltered = players.filter((player) => player.groupId === groupId);
@@ -38,39 +39,33 @@ const AddPoints: React.FC = () => {
   };
 
   return (
-    <div className="add-play-container">
+    <div className="add-points-container">
       <h1>Adicionar Pontos - {group?.name || ''}</h1>
 
       <div className="form-group">
         <label>Jogador</label>
-        <select
+        <Select
+          options={playersFiltered.map((player) => ({
+            value: player.id,
+            label: `${player.name} (${player.points} pontos)`,
+          }))}
           value={playerId}
           onChange={(e) => setPlayerId(e.target.value)}
-          className="select-input"
-        >
-          <option value="">Selecione um jogador</option>
-          {playersFiltered.map((player) => (
-            <option key={player.id} value={player.id}>
-              {player.name} ({player.points} pontos)
-            </option>
-          ))}
-        </select>
+          placeholder="Selecione um jogador"
+        />
       </div>
 
       <div className="form-group">
         <label>Jogada</label>
-        <select
+        <Select
+          options={playsFiltered.map((play) => ({
+            value: play.name,
+            label: `${play.name} (${play.points} pontos)`,
+          }))}
           value={playName}
           onChange={(e) => setPlayName(e.target.value)}
-          className="select-input"
-        >
-          <option value="">Selecione uma jogada</option>
-          {playsFiltered.map((play) => (
-            <option key={play.id} value={play.name}>
-              {play.name} ({play.points} pontos)
-            </option>
-          ))}
-        </select>
+          placeholder="Selecione uma jogada"
+        />
       </div>
 
       <Button text="Adicionar Pontos" onClick={handleSubmit} />
