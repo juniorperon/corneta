@@ -1,11 +1,12 @@
 import React from 'react';
+
 import styled from 'styled-components';
 
-const StyledBackButton = styled.button`
+const StyledButton = styled.button`
   display: block;
   width: 100%;
   text-align: center;
-  background-color: #ff4d4d;
+  background-color: #007bff;
   color: white;
   padding: 12px;
   border: none;
@@ -16,20 +17,21 @@ const StyledBackButton = styled.button`
   margin-top: 16px;
 
   &:hover {
-    background-color: #cc0000;
+    background-color: #0056b3;
   }
 `;
 
 interface ButtonProps {
+  text: string;
   onClick: () => void;
 }
 
-const BackButton: React.FC<ButtonProps> = ({ onClick }) => {
+const Button: React.FC<ButtonProps> = ({ text, onClick }) => {
   return (
-    <StyledBackButton onClick={onClick}>
-      Voltar
-    </StyledBackButton>
+    <StyledButton onClick={onClick}>
+      {text}
+    </StyledButton>
   );
 };
 
-export default BackButton;
+export default Button;

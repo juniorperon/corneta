@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAppContext } from '../../context/AppContext';
-import BackButton from '../../components/backButton';
+import BackButton from '../../components/BackButton';
 
 const Plays: React.FC = () => {
   const { groupId } = useParams<{ groupId: string }>();
@@ -22,7 +22,7 @@ const Plays: React.FC = () => {
     <div className="plays-container">
       <h1>Jogadas do Grupo</h1>
 
-      <BackButton />
+      <BackButton onClick={() => navigate(-1)} />
 
       <div>
         {groupPlays.length === 0 ? (

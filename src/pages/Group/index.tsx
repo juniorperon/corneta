@@ -1,56 +1,53 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import BackButton from '../../components/backButton';
+import BackButton from '../../components/BackButton';
 import { useAppContext } from '../../context/AppContext';
-
+import './styles.css';
+import Button from '../../components/Button';
 
 const Group: React.FC = () => {
   const { groupId } = useParams();
   const navigate = useNavigate();
   const { groups, players } = useAppContext();
 
-  const group = groups.filter((group) => group.id === groupId)
-  const playersFiltered = players.filter((player) => player.groupId === groupId)
+  const group = groups.find((group) => group.id === groupId);
+  const playersFiltered = players
+    .filter((player) => player.groupId === groupId)
+    .sort((a, b) => b.points - a.points);
 
-  useEffect(() => {
-
-  })
+  if (!group) return <p>Grupo não encontrado</p>;
 
   return (
     <div className="group-container">
-      <h1>{group[0].name}</h1>
+      <h1>{group.name}</h1>
 
       <div className="group-actions">
-        <button
-          className="action-button"
+        <Button
+          text="Adicionar Jogador"
           onClick={() => navigate(`/add-player/${groupId}`)}
-        >
-          Adicionar Jogador
-        </button>
-        <button
-          className="action-button"
+        />
+        <Button
+          text="Adicionar Jogada"
           onClick={() => navigate(`/add-play/${groupId}`)}
-        >
-          Adicionar Jogada
-        </button>
-        <button
-          className="action-button"
+        />
+        <Button
+          text="Ver Jogadas"
           onClick={() => navigate(`/plays/${groupId}`)}
-        >
-          Ver Jogadas
-        </button>
+        />
       </div>
 
-      <BackButton />
-
-      <h2>Jogadores</h2>
-      <ul>
-        {playersFiltered.map((player) => (
-          <li key={player.id}>
-            {player.name} - {player.points} pontos
+      <h2>Ranking</h2>
+      <ul className="ranking-list">
+        {playersFiltered.map((player, index) => (
+          <li key={player.id} className="ranking-item">
+            <span className="ranking-position">{index + 1}º</span> {/* Posição no ranking */}
+            <span className="ranking-name">{player.name}</span> {/* Nome do jogador */}
+            <span className="ranking-points">{player.points} pontos</span> {/* Pontos */}
           </li>
         ))}
       </ul>
+
+      <BackButton onClick={() => navigate('/')} />
     </div>
   );
 };

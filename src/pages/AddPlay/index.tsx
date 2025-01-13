@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAppContext } from '../../context/AppContext';
-import { Group, Play } from '../../types';
-import BackButton from '../../components/backButton';
+import { Play } from '../../types';
+import BackButton from '../../components/BackButton';
 
 const AddPlay: React.FC = () => {
-  const { groups, addPlay, plays, players } = useAppContext();
+  const navigate = useNavigate();
+  const { groups, addPlay, plays } = useAppContext();
   const [selectedGroupId, setSelectedGroupId] = useState<string>('');
   const [selectedPlay, setSelectedPlay] = useState<string>('');
 
@@ -27,7 +29,7 @@ const AddPlay: React.FC = () => {
     <div>
       <h2>Adicionar Jogada</h2>
 
-      <BackButton />
+      <BackButton onClick={() => navigate(-1)} />
 
       <div>
         <label>Grupo</label>
