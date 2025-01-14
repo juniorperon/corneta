@@ -34,6 +34,10 @@ const Group: React.FC = () => {
           text="Adicionar Pontos"
           onClick={() => navigate(`/add-points/${groupId}`)}
         />
+        <Button
+          text="Sortear Duplas"
+          onClick={() => navigate(`/draw-pairs/${groupId}`)}
+        />
       </div>
 
       <h2>Ranking</h2>
