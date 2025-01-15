@@ -4,6 +4,7 @@ import { useAppContext } from '../../context/AppContext';
 import BackButton from '../../components/BackButton';
 import Button from '../../components/Button';
 import './styles.css';
+import CardPlayer from '../../components/CardPlayer';
 
 const AddPlayer: React.FC = () => {
   const { groupId } = useParams();
@@ -53,12 +54,10 @@ const AddPlayer: React.FC = () => {
       <ul className="player-list">
         {filteredPlayers.length > 0 ? (
           filteredPlayers.map((player) => (
-            <li key={player.id} className="player-item">
-              {player.name}
-            </li>
+            <CardPlayer key={player.id} id={player.id} name={player.name} />
           ))
         ) : (
-          <li>Nenhum jogador encontrado.</li>
+          <p style={{ padding: '8px', borderRadius: '8px', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }}>Nenhum jogador encontrado.</p>
         )}
       </ul>
 

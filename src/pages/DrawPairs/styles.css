@@ -1,69 +1,125 @@
+/* Container principal */
 .draw-pairs-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  max-width: 400px;
-  /* Define uma largura menor */
-  margin: 0 auto;
-  /* Centraliza horizontalmente */
+  height: 100vh;
+  /* Ocupa toda a altura da tela */
   padding: 20px;
-  background-color: #ffffff;
-  /* Ajuste de cor (opcional) */
-  border: 1px solid #ddd;
-  /* Adiciona borda (opcional) */
-  border-radius: 8px;
-  /* Arredondamento das bordas */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  /* Adiciona sombra (opcional) */
+  box-sizing: border-box;
 }
 
+/* Título */
 .draw-pairs-container h1 {
-  text-align: center;
+  font-size: 2rem;
   margin-bottom: 20px;
 }
 
+/* Formulário */
 .form-group {
+  margin: 10px 0;
+  width: 100%;
+  max-width: 400px;
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  width: 50%;
-  margin: 15px;
+  align-items: center;
+  flex-direction: column;
 }
 
+/* Label do formulário */
 .form-group label {
-  font-weight: bold;
-  margin: 10px;
+  display: block;
+  margin-bottom: 5px;
+  font-size: 1rem;
 }
 
+/* Input e Select */
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+button {
+  margin-top: 15px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.selected-players {
+  text-align: center;
+}
+
+/* Lista de jogadores selecionados */
 .selected-players ul {
-  list-style-type: none;
+  list-style: none;
   padding: 0;
-  margin: 0;
+  margin: 10px 0;
+  max-width: 400px;
+  /* Limita a largura da lista */
 }
 
 .selected-players li {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  padding: 10px;
-  background-color: #f9f9f9;
-  margin-bottom: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
+  padding: 5px 0;
+  border-bottom: 1px solid #ccc;
 }
 
-.selected-players li:hover {
-  background-color: #f0f0f0;
+.selected-players li:last-child {
+  border-bottom: none;
 }
 
-.pairs-result li {
-  padding: 10px;
-  background-color: #f9f9f9;
-  margin-bottom: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  text-align: center;
-  /* Centraliza o texto */
+.selected-players svg {
+  cursor: pointer;
+}
+
+/* Duplas e Grupos */
+.pairs,
+.groups {
+  margin-top: 30px;
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  /* Limita a largura das listas de duplas e grupos */
+}
+
+.pairs ul,
+.groups ul {
+  list-style: none;
+  padding: 0;
+}
+
+.pairs li,
+.groups li {
+  padding: 5px 0;
+  border-bottom: 1px solid #ccc;
+}
+
+.groups .group {
+  margin-top: 20px;
+}
+
+/* Ajustes adicionais */
+input[type="number"] {
+  width: 50%;
+  padding: 5px;
+  font-size: 1rem;
 }
