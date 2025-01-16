@@ -108,6 +108,37 @@ const DrawPairs: React.FC = () => {
     setGroups(generatedGroups);
   };
 
+  const handleRegisterPairs = async () => {
+    if (!drawPairs || drawPairs.length === 0) {
+      alert('Não há duplas para registrar.');
+      return;
+    }
+    alert('Duplas registradas com sucesso!');
+    // try {
+    //   const response = await fetch('http://localhost:3000/api/registerPairs', {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify({
+    //       pairs: drawPairs,
+    //       groupId, // Envie o ID do grupo se necessário
+    //     }),
+    //   });
+
+    //   if (!response.ok) {
+    //     const error = await response.json();
+    //     throw new Error(error.message || 'Erro desconhecido');
+    //   }
+
+    //   alert('Duplas registradas com sucesso!');
+    //   setDrawPairs([]); // Opcional: Limpa as duplas
+    // } catch (error: any) {
+    //   console.error(error);
+    //   alert(`Erro ao registrar duplas: ${error.message}`);
+    // }
+  };
+
   return (
     <div className="draw-pairs-container">
       <h1>Sorteio de Pares</h1>
@@ -195,6 +226,10 @@ const DrawPairs: React.FC = () => {
           ))}
         </div>
       )}
+      {drawPairs.length > 0 && (
+        <Button text="Registrar Duplas" onClick={handleRegisterPairs} />
+      )}
+
 
       <BackButton onClick={() => navigate(-1)} />
     </div>
