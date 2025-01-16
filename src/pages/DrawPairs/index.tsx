@@ -23,7 +23,6 @@ const DrawPairs: React.FC = () => {
   const [attempts, setAttempts] = useState<number>(0);
 
 
-  //adiciona player OK
   const handleAddPlayer = () => {
     if (selectedPlayer && !selectedPlayers.some(p => p.id === selectedPlayer.id)) {
       setSelectedPlayers((prev) => [...prev, selectedPlayer]);
@@ -31,14 +30,11 @@ const DrawPairs: React.FC = () => {
     }
   };
 
-  //Remove player OK
   const handleRemovePlayer = (playerId: string) => {
     setSelectedPlayers((prev) => prev.filter((p) => p.id !== playerId));
   };
 
-  //OK
   const handleDrawPairs = (random: boolean) => {
-    // Verifica se há jogadores suficientes e se o número é par
     if (selectedPlayers.length < 4 || selectedPlayers.length % 2 !== 0) {
       alert('O número de jogadores deve ser maior ou igual a 4 e par.');
       return;
