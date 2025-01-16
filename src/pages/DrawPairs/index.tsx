@@ -4,61 +4,102 @@ import { useAppContext } from '../../context/AppContext';
 import BackButton from '../../components/BackButton';
 import Button from '../../components/Button';
 import Select from '../../components/Select';
-import { FaTrashAlt } from 'react-icons/fa';
 import './styles.css';
 import CardPlayer from '../../components/CardPlayer';
 
 const DrawPairs: React.FC = () => {
   const { groupId } = useParams();
   const navigate = useNavigate();
-  const { players } = useAppContext();
+  const { players, pairs } = useAppContext();
 
   const playersFiltered = players.filter((player) => player.groupId === groupId);
 
-  const [selectedPlayer, setSelectedPlayer] = useState<any>(null); // Agora é um objeto de jogador
-  const [selectedPlayers, setSelectedPlayers] = useState<any[]>([]); // Array de objetos de jogadores
-  const [pairs, setPairs] = useState<{ id1: string, id2: string }[]>([]); // Duplas como objetos
-  const [groups, setGroups] = useState<{ duplas: { id1: string, id2: string }[] }[]>([]); // Grupos como objetos com duplas
+  const [selectedPlayer, setSelectedPlayer] = useState<any>(null);
+  const [selectedPlayers, setSelectedPlayers] = useState<any[]>([]);
+  const [drawPairs, setDrawPairs] = useState<{ id: string, id_partner: string }[]>([]);
+  const [groups, setGroups] = useState<{ duplas: { id: string, id_partner: string }[] }[]>([]);
   const [numGroups, setNumGroups] = useState<number | null>(null);
+  const [maxAttempts, setMaxAttempts] = useState<boolean>(false);
+  const [attempts, setAttempts] = useState<number>(0);
 
+
+  //adiciona player OK
   const handleAddPlayer = () => {
     if (selectedPlayer && !selectedPlayers.some(p => p.id === selectedPlayer.id)) {
       setSelectedPlayers((prev) => [...prev, selectedPlayer]);
-      setSelectedPlayer(null); // Limpa a seleção de jogador
+      setSelectedPlayer(null);
     }
   };
 
+  //Remove player OK
   const handleRemovePlayer = (playerId: string) => {
     setSelectedPlayers((prev) => prev.filter((p) => p.id !== playerId));
   };
 
-  const handleDrawPairs = () => {
+  //OK
+  const handleDrawPairs = (random: boolean) => {
+    // Verifica se há jogadores suficientes e se o número é par
     if (selectedPlayers.length < 4 || selectedPlayers.length % 2 !== 0) {
-      alert('O número de jogadores deve ser maior ou igual a 4 e ser par.');
+      alert('O número de jogadores deve ser maior ou igual a 4 e par.');
       return;
     }
 
-    const shuffled = [...selectedPlayers].sort(() => Math.random() - 0.5);
-    const generatedPairs: { id1: string, id2: string }[] = [];
-    for (let i = 0; i < shuffled.length; i += 2) {
-      generatedPairs.push({
-        id1: shuffled[i].id,
-        id2: shuffled[i + 1]?.id,
-      });
+    let generatedPairs: { id: string; id_partner: string }[] = [];
+    const maxAttempts = 100; // Limite de tentativas para evitar loops infinitos
+    let localAttempts = 0;
+
+    while (localAttempts < maxAttempts) {
+      localAttempts++;
+      generatedPairs = [];
+      const shuffled = [...selectedPlayers].sort(() => Math.random() - 0.5);
+
+      // Gerar duplas
+      let isDuplicate = false;
+      for (let i = 0; i < shuffled.length; i += 2) {
+        const pair = {
+          id: shuffled[i].id,
+          id_partner: shuffled[i + 1]?.id,
+        };
+
+        if (!random) {
+          const [low, high] = [pair.id, pair.id_partner].sort();
+          if (pairs.some(p => {
+            const [existingLow, existingHigh] = [p.id, p.id_partner].sort();
+            return existingLow === low && existingHigh === high;
+          })) {
+            isDuplicate = true;
+            break;
+          }
+        }
+
+        generatedPairs.push(pair);
+      }
+
+      if (!isDuplicate) {
+        break;
+      }
     }
-    setPairs(generatedPairs);
+
+    if (localAttempts === maxAttempts) {
+      setMaxAttempts(true);
+      alert('Não foi possível gerar pares únicos após várias tentativas. Tente novamente.');
+      return;
+    }
+
+    setAttempts(localAttempts);
+    setDrawPairs(generatedPairs);
     setGroups([]);
     setNumGroups(null);
   };
 
   const handleDrawGroups = () => {
-    if (!numGroups || numGroups < 1 || numGroups > pairs.length / 2) {
+    if (!numGroups || numGroups < 1 || numGroups > drawPairs.length / 2) {
       alert('Escolha um número válido de grupos.');
       return;
     }
 
-    const shuffledPairs = [...pairs].sort(() => Math.random() - 0.5);
-    const generatedGroups: { duplas: { id1: string, id2: string }[] }[] = [];
+    const shuffledPairs = [...drawPairs].sort(() => Math.random() - 0.5);
+    const generatedGroups: { duplas: { id: string, id_partner: string }[] }[] = [];
 
     for (let i = 0; i < numGroups; i++) {
       generatedGroups.push({ duplas: [] });
@@ -108,15 +149,20 @@ const DrawPairs: React.FC = () => {
           : <p style={{ padding: '8px', borderRadius: '8px', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }}>Nenhum jogador inserido.</p>}
       </div>
 
-      <Button text="Sortear Pares" onClick={handleDrawPairs} />
+      <p>Numero de tentativa: {attempts}</p>
 
-      {pairs.length > 0 && (
+      <Button text="Sortear Duplas" onClick={() => handleDrawPairs(false)} />
+      {maxAttempts ?
+        <Button text="Sortear Duplas Repetindo" onClick={() => handleDrawPairs(true)} />
+        : <></>}
+
+      {drawPairs.length > 0 && (
         <div className="pairs">
-          <h2>Pares Sorteados</h2>
+          <h2>Duplas Sorteados</h2>
           <ul>
-            {pairs.map((pair, index) => (
+            {drawPairs.map((pair, index) => (
               <li key={index}>
-                {players.find(p => p.id === pair.id1)?.name} e {players.find(p => p.id === pair.id2)?.name}
+                {players.find(p => p.id === pair.id)?.name} e {players.find(p => p.id === pair.id_partner)?.name}
               </li>
             ))}
           </ul>
@@ -126,10 +172,10 @@ const DrawPairs: React.FC = () => {
             <input
               type="number"
               min="1"
-              max={Math.floor(pairs.length / 2)}
+              max={Math.floor(drawPairs.length / 2)}
               value={numGroups ?? ''}
               onChange={(e) => setNumGroups(Number(e.target.value))}
-              placeholder={`Máximo: ${Math.floor(pairs.length / 2)}`}
+              placeholder={`Máximo: ${Math.floor(drawPairs.length / 2)}`}
             />
             <Button text="Sortear Grupos" onClick={handleDrawGroups} />
           </div>
@@ -145,7 +191,7 @@ const DrawPairs: React.FC = () => {
               <ul>
                 {group.duplas.map((pair, idx) => (
                   <li key={idx}>
-                    {players.find(p => p.id === pair.id1)?.name} e {players.find(p => p.id === pair.id2)?.name}
+                    {players.find(p => p.id === pair.id)?.name} e {players.find(p => p.id === pair.id_partner)?.name}
                   </li>
                 ))}
               </ul>

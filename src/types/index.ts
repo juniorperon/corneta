@@ -18,3 +18,9 @@ export interface Play {
   points: number;
   groupId: string;
 }
+
+export interface Pair {
+  id: string,
+  id_partner: string
+  group_id: string
+}

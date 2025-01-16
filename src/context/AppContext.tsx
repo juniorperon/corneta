@@ -1,10 +1,11 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { Group, Play, Player } from '../types';
+import { Group, Pair, Play, Player } from '../types';
 
 interface AppContextData {
   groups: Group[];
   plays: Play[];
   players: Player[];
+  pairs: Pair[];
   addPlay: (play: Play, groupId: string) => void;
   getPlaysByGroup: (groupId: string) => Play[];
   updatePlayerPoints: (playerId: string, points: number) => void;
@@ -44,6 +45,19 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     { id: '15', name: 'Rodrigo Mosca', points: 200, groupId: '3' },
     { id: '16', name: 'Fefe', points: 200, groupId: '3' },
     { id: '17', name: 'Enrico Versolato', points: 200, groupId: '3' },
+    { id: '18', name: 'Mazinho', points: 200, groupId: '3' },
+  ]);
+
+  const [pairs, setPairs] = useState<Pair[]>([
+    { id: '5', id_partner: '6', group_id: '3' },
+    { id: '5', id_partner: '7', group_id: '3' },
+    { id: '5', id_partner: '8', group_id: '3' },
+    { id: '7', id_partner: '8', group_id: '3' },
+    { id: '9', id_partner: '10', group_id: '3' },
+    { id: '11', id_partner: '12', group_id: '3' },
+    { id: '13', id_partner: '14', group_id: '3' },
+    { id: '15', id_partner: '16', group_id: '3' },
+    { id: '17', id_partner: '18', group_id: '3' },
   ]);
 
   const [groups, setGroups] = useState<Group[]>([
@@ -106,7 +120,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   };
 
   return (
-    <AppContext.Provider value={{ groups, plays, players, addPlay, getPlaysByGroup, updatePlayerPoints }}>
+    <AppContext.Provider value={{ groups, plays, players, addPlay, getPlaysByGroup, updatePlayerPoints, pairs }}>
       {children}
     </AppContext.Provider>
   );
