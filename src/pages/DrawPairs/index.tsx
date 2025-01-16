@@ -16,8 +16,8 @@ const DrawPairs: React.FC = () => {
 
   const [selectedPlayer, setSelectedPlayer] = useState<any>(null);
   const [selectedPlayers, setSelectedPlayers] = useState<any[]>([]);
-  const [drawPairs, setDrawPairs] = useState<{ id: string, id_partner: string }[]>([]);
-  const [groups, setGroups] = useState<{ duplas: { id: string, id_partner: string }[] }[]>([]);
+  const [drawPairs, setDrawPairs] = useState<{ id: string, idPartner: string }[]>([]);
+  const [groups, setGroups] = useState<{ duplas: { id: string, idPartner: string }[] }[]>([]);
   const [numGroups, setNumGroups] = useState<number | null>(null);
   const [maxAttempts, setMaxAttempts] = useState<boolean>(false);
   const [attempts, setAttempts] = useState<number>(0);
@@ -40,8 +40,8 @@ const DrawPairs: React.FC = () => {
       return;
     }
 
-    let generatedPairs: { id: string; id_partner: string }[] = [];
-    const maxAttempts = 100;
+    let generatedPairs: { id: string; idPartner: string }[] = [];
+    const maxAttempts = 1000;
     let localAttempts = 0;
 
     while (localAttempts < maxAttempts) {
@@ -53,14 +53,14 @@ const DrawPairs: React.FC = () => {
       for (let i = 0; i < shuffled.length; i += 2) {
         const pair = {
           id: shuffled[i].id,
-          id_partner: shuffled[i + 1]?.id,
+          idPartner: shuffled[i + 1]?.id,
         };
-
+        console.log("DUPLA", pair)
 
         if (!random) {
-          const [low, high] = [pair.id, pair.id_partner].sort();
+          const [low, high] = [pair.id, pair.idPartner].sort();
           if (pairs.some(p => {
-            const [existingLow, existingHigh] = [p.id, p.id_partner].sort();
+            const [existingLow, existingHigh] = [p.id, p.idPartner].sort();
             return existingLow === low && existingHigh === high;
           })) {
             isDuplicate = true;
@@ -95,7 +95,7 @@ const DrawPairs: React.FC = () => {
     }
 
     const shuffledPairs = [...drawPairs].sort(() => Math.random() - 0.5);
-    const generatedGroups: { duplas: { id: string, id_partner: string }[] }[] = [];
+    const generatedGroups: { duplas: { id: string, idPartner: string }[] }[] = [];
 
     for (let i = 0; i < numGroups; i++) {
       generatedGroups.push({ duplas: [] });
@@ -189,7 +189,7 @@ const DrawPairs: React.FC = () => {
           <ul>
             {drawPairs.map((pair, index) => (
               <li key={index}>
-                {players.find(p => p.id === pair.id)?.name} e {players.find(p => p.id === pair.id_partner)?.name}
+                {players.find(p => p.id === pair.id)?.name} e {players.find(p => p.id === pair.idPartner)?.name}
               </li>
             ))}
           </ul>
@@ -218,7 +218,7 @@ const DrawPairs: React.FC = () => {
               <ul>
                 {group.duplas.map((pair, idx) => (
                   <li key={idx}>
-                    {players.find(p => p.id === pair.id)?.name} e {players.find(p => p.id === pair.id_partner)?.name}
+                    {players.find(p => p.id === pair.id)?.name} e {players.find(p => p.id === pair.idPartner)?.name}
                   </li>
                 ))}
               </ul>

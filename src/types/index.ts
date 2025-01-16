@@ -21,6 +21,6 @@ export interface Play {
 
 export interface Pair {
   id: string,
-  id_partner: string
-  group_id: string
+  idPartner: string
+  groupId: string
 }

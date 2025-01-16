@@ -49,15 +49,15 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   ]);
 
   const [pairs, setPairs] = useState<Pair[]>([
-    { id: '5', id_partner: '6', group_id: '3' },
-    { id: '5', id_partner: '7', group_id: '3' },
-    { id: '5', id_partner: '8', group_id: '3' },
-    { id: '7', id_partner: '8', group_id: '3' },
-    { id: '9', id_partner: '10', group_id: '3' },
-    { id: '11', id_partner: '12', group_id: '3' },
-    { id: '13', id_partner: '14', group_id: '3' },
-    { id: '15', id_partner: '16', group_id: '3' },
-    { id: '17', id_partner: '18', group_id: '3' },
+    { id: '5', idPartner: '6', groupId: '3' },
+    { id: '5', idPartner: '7', groupId: '3' },
+    { id: '5', idPartner: '8', groupId: '3' },
+    { id: '7', idPartner: '8', groupId: '3' },
+    { id: '9', idPartner: '10', groupId: '3' },
+    { id: '11', idPartner: '12', groupId: '3' },
+    { id: '13', idPartner: '14', groupId: '3' },
+    { id: '15', idPartner: '16', groupId: '3' },
+    { id: '17', idPartner: '18', groupId: '3' },
   ]);
 
   const [groups, setGroups] = useState<Group[]>([
