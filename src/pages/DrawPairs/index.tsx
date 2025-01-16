@@ -41,7 +41,7 @@ const DrawPairs: React.FC = () => {
     }
 
     let generatedPairs: { id: string; id_partner: string }[] = [];
-    const maxAttempts = 100; // Limite de tentativas para evitar loops infinitos
+    const maxAttempts = 100;
     let localAttempts = 0;
 
     while (localAttempts < maxAttempts) {
@@ -49,13 +49,13 @@ const DrawPairs: React.FC = () => {
       generatedPairs = [];
       const shuffled = [...selectedPlayers].sort(() => Math.random() - 0.5);
 
-      // Gerar duplas
       let isDuplicate = false;
       for (let i = 0; i < shuffled.length; i += 2) {
         const pair = {
           id: shuffled[i].id,
           id_partner: shuffled[i + 1]?.id,
         };
+
 
         if (!random) {
           const [low, high] = [pair.id, pair.id_partner].sort();

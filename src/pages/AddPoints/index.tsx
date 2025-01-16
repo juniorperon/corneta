@@ -24,7 +24,6 @@ const AddPoints: React.FC = () => {
       return;
     }
 
-    // Encontrar a jogada e o jogador selecionados
     const selectedPlay = playsFiltered.find((play) => play.name === playName);
     const selectedPlayer = playersFiltered.find((player) => player.id === playerId);
 
