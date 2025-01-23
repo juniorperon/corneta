@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './styles.css';
+import Button from '../../components/Button';
 
 const groups = [
   { id: '1', name: 'Amigos CCS' },
@@ -18,15 +19,18 @@ const Home: React.FC = () => {
       <ul className="group-list">
         {groups.map((group) => (
           <li key={group.id}>
-            <button
-              className="group-button"
+            <Button
+              text={group.name}
               onClick={() => navigate(`/group/${group.id}`)}
-            >
-              {group.name}
-            </button>
+            />
+
           </li>
         ))}
       </ul>
+      <Button
+        text="Adicionar Grupo"
+        onClick={() => navigate(`/add-group/`)}
+      />
     </div>
   );
 };

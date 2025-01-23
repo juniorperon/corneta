@@ -1,10 +1,16 @@
 .home-container {
+  display: flex;
+  flex-direction: column;
   padding: 20px;
   text-align: center;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
 }
 
 .home-img {
   border-radius: 50%;
+  width: 50px;
 }
 
 .home-title {

@@ -1,9 +1,9 @@
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import BackButton from '../../components/BackButton';
-import { useAppContext } from '../../context/AppContext';
+import BackButton from '../../../components/BackButton';
+import { useAppContext } from '../../../context/AppContext';
 import './styles.css';
-import Button from '../../components/Button';
+import Button from '../../../components/Button';
 
 const Group: React.FC = () => {
   const { groupId } = useParams();

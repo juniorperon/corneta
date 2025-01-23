@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useAppContext } from '../../context/AppContext';
-import BackButton from '../../components/BackButton';
-import Button from '../../components/Button';
-import Select from '../../components/Select';
+import { useAppContext } from '../../../context/AppContext';
+import BackButton from '../../../components/BackButton';
+import Button from '../../../components/Button';
+import Select from '../../../components/Select';
 import './styles.css';
-import CardPlayer from '../../components/CardPlayer';
+import CardPlayer from '../../../components/CardPlayer';
 
 const DrawPairs: React.FC = () => {
   const { groupId } = useParams();
