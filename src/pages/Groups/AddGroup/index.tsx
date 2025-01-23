@@ -30,6 +30,7 @@ const AddGroup: React.FC = () => {
 
   return (
     <div className="group-container">
+      <img className='home-img' src="../corneta-logo.webp" alt="logo-corneta" />
       <h1>Adicionar Grupo</h1>
       <Input value={groupName} onChange={(e) => setGroupName(e.target.value)} placeholder='Digite o nome do grupo' />
 
