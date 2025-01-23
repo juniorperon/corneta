@@ -19,16 +19,21 @@ const StyledButton = styled.button`
   &:hover {
     background-color: #0056b3;
   }
+
+  &:disabled {
+    background-color:gray;
+  }
 `;
 
 interface ButtonProps {
   text: string;
   onClick: () => void;
+  disabled?: boolean;
 }
 
-const Button: React.FC<ButtonProps> = ({ text, onClick }) => {
+const Button: React.FC<ButtonProps> = ({ text, onClick, disabled }) => {
   return (
-    <StyledButton onClick={onClick}>
+    <StyledButton disabled={disabled} onClick={onClick}>
       {text}
     </StyledButton>
   );
