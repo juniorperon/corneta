@@ -1,26 +1,26 @@
 export interface Player {
-  id: string;
+  id: number;
   name: string;
   points: number;
   groupId: string;
 }
 
 export interface Group {
-  id: string;
+  id: number;
   name: string;
   players: Player[];
   plays: Play[];
 }
 
 export interface Play {
-  id: string;
+  id: number;
   name: string;
   points: number;
   groupId: string;
 }
 
 export interface Pair {
-  id: string,
+  id: number,
   idPartner: string
   groupId: string
 }

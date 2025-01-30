@@ -10,7 +10,7 @@
 
 .home-img {
   border-radius: 50%;
-  width: 100px;
+  width: 200px;
 }
 
 .home-title {
@@ -28,7 +28,6 @@
   padding: 10px 20px;
   font-size: 16px;
   cursor: pointer;
-  background-color: lightblue;
 }
 
 .home-actions {
@@ -38,8 +37,6 @@
 .action-button {
   margin: 5px;
   padding: 10px 20px;
-  background-color: #007bff;
-  color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;

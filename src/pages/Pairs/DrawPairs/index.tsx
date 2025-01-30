@@ -144,7 +144,7 @@ const DrawPairs: React.FC = () => {
       <h1>Sorteio de Pares</h1>
 
       <div className="form-group">
-        <Select
+        {/* <Select
           options={playersFiltered.map((player) => ({
             value: player.id,
             label: `${player.name}`,
@@ -155,7 +155,7 @@ const DrawPairs: React.FC = () => {
             setSelectedPlayer(player || null);
           }}
           placeholder="Selecione um jogador"
-        />
+        /> */}
         <Button text="Adicionar Jogador" onClick={handleAddPlayer} />
       </div>
 
@@ -186,13 +186,13 @@ const DrawPairs: React.FC = () => {
       {drawPairs.length > 0 && (
         <div className="pairs">
           <h2>Duplas Sorteados</h2>
-          <ul>
+          {/* <ul>
             {drawPairs.map((pair, index) => (
               <li key={index}>
                 {players.find(p => p.id === pair.id)?.name} e {players.find(p => p.id === pair.idPartner)?.name}
               </li>
             ))}
-          </ul>
+          </ul> */}
 
           <div className="form-group">
             <label>Número de Grupos</label>
@@ -215,13 +215,13 @@ const DrawPairs: React.FC = () => {
           {groups.map((group, index) => (
             <div key={index} className="group">
               <h3>Grupo {index + 1}</h3>
-              <ul>
+              {/* <ul>
                 {group.duplas.map((pair, idx) => (
                   <li key={idx}>
                     {players.find(p => p.id === pair.id)?.name} e {players.find(p => p.id === pair.idPartner)?.name}
                   </li>
                 ))}
-              </ul>
+              </ul> */}
             </div>
           ))}
         </div>

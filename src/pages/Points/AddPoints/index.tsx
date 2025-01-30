@@ -9,12 +9,12 @@ import './styles.css';
 const AddPoints: React.FC = () => {
   const { groupId } = useParams();
   const navigate = useNavigate();
-  const { groups, plays, players, updatePlayerPoints } = useAppContext();
+  // const { groups, plays, players, updatePlayerPoints } = useAppContext();
 
-  const playsFiltered = plays.filter((play) => play.groupId === groupId);
-  const playersFiltered = players.filter((player) => player.groupId === groupId);
+  // const playsFiltered = plays.filter((play) => play.groupId === groupId);
+  // const playersFiltered = players.filter((player) => player.groupId === groupId);
 
-  const group = groups.find((group) => group.id === groupId);
+  // const group = groups.find((group) => group.id === groupId);
   const [playName, setPlayName] = useState('');
   const [playerId, setPlayerId] = useState('');
 
@@ -24,25 +24,25 @@ const AddPoints: React.FC = () => {
       return;
     }
 
-    const selectedPlay = playsFiltered.find((play) => play.name === playName);
-    const selectedPlayer = playersFiltered.find((player) => player.id === playerId);
+    // const selectedPlay = playsFiltered.find((play) => play.name === playName);
+    // const selectedPlayer = playersFiltered.find((player) => player.id === playerId);
 
-    if (selectedPlay && selectedPlayer) {
-      updatePlayerPoints(selectedPlayer.id, selectedPlay.points);
+    //   if (selectedPlay && selectedPlayer) {
+    //     updatePlayerPoints(selectedPlayer.id, selectedPlay.points);
 
-      alert(`${selectedPlayer.name} fez a jogada ${selectedPlay.name} e levou ${selectedPlay.points} pontos!`);
-      navigate(`/group/${groupId}`);
-    } else {
-      alert('Jogada ou jogador inválido.');
-    }
+    //     alert(`${selectedPlayer.name} fez a jogada ${selectedPlay.name} e levou ${selectedPlay.points} pontos!`);
+    //     navigate(`/group/${groupId}`);
+    //   } else {
+    //     alert('Jogada ou jogador inválido.');
+    //   }
   };
 
   return (
     <div className="add-points-container">
-      <h1>Adicionar Pontos - {group?.name || ''}</h1>
+      {/* <h1>Adicionar Pontos - {group?.name || ''}</h1> */}
 
       <div className="form-group">
-        <label>Jogador</label>
+        {/* <label>Jogador</label>
         <Select
           options={playersFiltered.map((player) => ({
             value: player.id,
@@ -51,12 +51,12 @@ const AddPoints: React.FC = () => {
           value={playerId}
           onChange={(e) => setPlayerId(e.target.value)}
           placeholder="Selecione um jogador"
-        />
+        /> */}
       </div>
 
       <div className="form-group">
         <label>Jogada</label>
-        <Select
+        {/* <Select
           options={playsFiltered.map((play) => ({
             value: play.name,
             label: `${play.name} (${play.points} pontos)`,
@@ -64,7 +64,7 @@ const AddPoints: React.FC = () => {
           value={playName}
           onChange={(e) => setPlayName(e.target.value)}
           placeholder="Selecione uma jogada"
-        />
+        /> */}
       </div>
 
       <Button text="Adicionar Pontos" onClick={handleSubmit} />

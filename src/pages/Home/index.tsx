@@ -3,15 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import './styles.css';
 import Button from '../../components/Button';
 import { api } from '../../services/api';
-
-interface Group {
-  id: string;
-  name: string;
-}
+import { Group } from '../../types';
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
-  const [groups, setGroups] = useState<Group[]>([]); // Tipando como array de grupos
+  const [groups, setGroups] = useState<Group[]>([]);
   const [message, setMessage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -40,19 +36,24 @@ const Home: React.FC = () => {
       {loading ? (
         <p>Carregando grupos...</p>
       ) : (
-        <>
-          <ul className="group-list">
-            {groups.map((group) => (
-              <li key={group.id}>
-                <Button
-                  text={group.name}
-                  onClick={() => navigate(`/group/${group.id}`)}
-                />
-              </li>
-            ))}
-          </ul>
-        </>
+        groups.length ?
+          <>
+            <div className="group-list">
+              {groups.map((group) => (
+                <div key={group.id}>
+                  <Button
+                    text={group.name}
+                    onClick={() => navigate(`/group/${group.id}`)}
+                  />
+                </div>
+              ))}
+            </div>
+          </>
+          : <p>Nenhum grupo encontrado</p>
+
       )}
+
+
 
       <Button text="Adicionar Grupo" onClick={() => navigate(`/add-group/`)} />
     </div>

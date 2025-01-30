@@ -12,13 +12,13 @@ const AddPlay: React.FC = () => {
 
   const playsFiltered = plays.filter((play) => play.groupId === groupId);
 
-  const group = groups.find((group) => group.id === groupId);
+  // const group = groups.find((group) => group.id === groupId);
   const [playName, setPlayName] = useState('');
   const [playPoint, setPlayPoint] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
 
   const handleSubmit = () => {
-    console.log(`Adicionando jogada: ${playName} ao grupo ${group?.name}`);
+    // console.log(`Adicionando jogada: ${playName} ao grupo ${group?.name}`);
     navigate(`/group/${groupId}`);
   };
 
@@ -28,7 +28,7 @@ const AddPlay: React.FC = () => {
 
   return (
     <div className="add-play-container">
-      <h1>Adicionar Jogada - {group?.name || ''}</h1>
+      {/* <h1>Adicionar Jogada - {group?.name || ''}</h1> */}
 
       <input
         type="text"
