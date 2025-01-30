@@ -30,7 +30,7 @@ const DrawPairs: React.FC = () => {
     }
   };
 
-  const handleRemovePlayer = (playerId: string) => {
+  const handleRemovePlayer = (playerId: number) => {
     setSelectedPlayers((prev) => prev.filter((p) => p.id !== playerId));
   };
 

@@ -3,9 +3,9 @@ import styled from 'styled-components';
 import { FaTrashAlt } from 'react-icons/fa';
 
 interface CardPlayerProps {
-  id: string;
+  id: number;
   name: string;
-  onRemove?: (id: string) => void;
+  onRemove?: (id: number) => void;
 }
 
 const CardContainer = styled.div`

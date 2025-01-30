@@ -9,10 +9,8 @@ import { Player, Group } from '../../../types';
 const GroupPage: React.FC = () => {
   const { groupId } = useParams();
   const navigate = useNavigate();
-  const [groups, setGroups] = useState<Group[]>([]);
   const [group, setGroup] = useState<Group | null>(null);
   const [players, setPlayers] = useState<Player[]>([]);
-  const [message, setMessage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -23,7 +21,6 @@ const GroupPage: React.FC = () => {
     setLoading(true);
     try {
       const response = await api.get('/group/listGroups');
-      setGroups(response.data.data);
 
       const selectedGroup = response.data.data.find((g: Group) => g.id === Number(groupId));
       setGroup(selectedGroup || null);
@@ -32,9 +29,9 @@ const GroupPage: React.FC = () => {
         getPlayers(selectedGroup.id);
       }
 
-      setMessage(`Grupos carregados com sucesso!`);
+      console.error(`Grupos carregados com sucesso!`);
     } catch (error) {
-      setMessage('Erro ao buscar grupos. Tente novamente.');
+      console.error('Erro ao buscar grupos. Tente novamente.', error);
     } finally {
       setLoading(false);
     }
@@ -64,7 +61,7 @@ const GroupPage: React.FC = () => {
         <Button text="Sortear Duplas" onClick={() => navigate(`/draw-pairs/${groupId}`)} />
       </div>
 
-      {players.length ?
+      {players.length && !loading ?
         <>
           <h2>Ranking</h2>
           <div className="ranking-list">

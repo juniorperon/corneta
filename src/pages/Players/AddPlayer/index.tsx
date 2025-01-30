@@ -6,35 +6,58 @@ import Button from '../../../components/Button';
 import './styles.css';
 import CardPlayer from '../../../components/CardPlayer';
 import { api } from '../../../services/api';
-import { Player } from '../../../types';
+import { Group, Player } from '../../../types';
+import Input from '../../../components/Input';
 
 const AddPlayer: React.FC = () => {
   const { groupId } = useParams();
   const navigate = useNavigate();
   const { groups } = useAppContext();
 
-  // const group = groups.find((group) => group.id === groupId);
   const [playerName, setPlayerName] = useState('');
   const [players, setPlayers] = useState<Player[]>([]);
+  const [group, setGroup] = useState<Group | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
 
   useEffect(() => {
-    getPlayers();
+    getGroups();
   }, []);
 
-  const getPlayers = async () => {
+  const getGroups = async () => {
     setLoading(true);
     try {
-      const response = await api.get('/player/listPLayers');
-      setPlayers(response.data.data);
-      console.log(response.data.data)
-      // const playersFiltered = players.filter((player) => player.groupId === groupId);
+      const response = await api.get('/group/listGroups');
 
-      setMessage(`Jogadores carregados com sucesso!`);
+      const selectedGroup = response.data.data.find((g: Group) => g.id === Number(groupId));
+      setGroup(selectedGroup);
+
+      if (selectedGroup) {
+        getPlayers(Number(groupId));
+      }
+
+      console.log(`Grupos carregados com sucesso!`);
     } catch (error) {
-      setMessage('Erro ao buscar jogadores. Tente novamente.');
+      console.error('Erro ao buscar grupos. Tente novamente.', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getPlayers(Number(groupId));
+  }, []);
+
+  const getPlayers = async (groupId: number) => {
+    setLoading(true);
+    try {
+      const response = await api.get(`/player/listPlayers/${groupId}`);
+      setPlayers(response.data.data);
+
+      console.log(`Jogadores carregados com sucesso!`);
+    } catch (error) {
+      console.error('Erro ao buscar jogadores. Tente novamente.', error);
     } finally {
       setLoading(false);
     }
@@ -45,7 +68,9 @@ const AddPlayer: React.FC = () => {
     try {
       await api.post('/player/addPlayer', { name: playerName, groupId, points: 0 });
 
-      // setMessage(`Jogador: ${playerName} Adicionado ao grupo: ${group?.name}!`);
+      setMessage(`${playerName} foi adicionado com sucesso!`);
+      setPlayerName('');
+      getPlayers(Number(groupId));
     } catch (error) {
       setMessage('Erro ao adicionar jogador. Tente novamente.');
     } finally {
@@ -53,44 +78,36 @@ const AddPlayer: React.FC = () => {
     }
   };
 
-  // const filteredPlayers = playersFiltered.filter((player) =>
-  //   player.name.toLowerCase().includes(searchQuery.toLowerCase())
-  // );
+  const filteredPlayers = players.filter((player) =>
+    player.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <div className="add-player-container">
-      {/* <h1>Adicionar Jogador - {group?.name || ''}</h1> */}
+      <h1>Adicionar Jogador - {group?.name || ''}</h1>
 
-      <input
-        type="text"
-        placeholder="Nome do Jogador"
-        value={playerName}
-        onChange={(e) => setPlayerName(e.target.value)}
-      />
+      <Input value={playerName} onChange={(e) => setPlayerName(e.target.value)} placeholder='Digite o nome do jogador' />
 
       <Button
         text="Adicionar Jogador"
         onClick={handleSubmit}
       />
+      {message && (
+        <p className={message.includes('sucesso') ? 'success' : 'error'}>{message}</p>
+      )}
 
       <h2>Lista de Jogadores</h2>
-      <input
-        type="text"
-        placeholder="Pesquisar Jogadores"
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
-        className="search-input"
-      />
+      <Input value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} placeholder='Pesquisar jogador' />
 
-      {/* <ul className="player-list">
-        {players.length > 0 ? (
-          players.map((player) => (
+      <ul className="player-list">
+        {filteredPlayers.length && !loading ? (
+          filteredPlayers.map((player) => (
             <CardPlayer key={player.id} id={player.id} name={player.name} />
           ))
         ) : (
           <p style={{ padding: '8px', borderRadius: '8px', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }}>Nenhum jogador encontrado.</p>
         )}
-      </ul> */}
+      </ul>
 
       <BackButton onClick={() => navigate(-1)} />
     </div>
