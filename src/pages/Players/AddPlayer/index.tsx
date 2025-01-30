@@ -12,7 +12,6 @@ import Input from '../../../components/Input';
 const AddPlayer: React.FC = () => {
   const { groupId } = useParams();
   const navigate = useNavigate();
-  const { groups } = useAppContext();
 
   const [playerName, setPlayerName] = useState('');
   const [players, setPlayers] = useState<Player[]>([]);
