@@ -19,3 +19,20 @@ h2 {
   margin-top: 20px;
   color: #333;
 }
+
+.add-points-container p {
+  margin-top: 20px;
+  padding: 10px 10px;
+  font-size: 1rem;
+  border-radius: 5px;
+}
+
+.add-points-container p.success {
+  background-color: #28a745;
+  color: #fff;
+}
+
+.add-points-container p.error {
+  background-color: #dc3545;
+  color: #fff;
+}

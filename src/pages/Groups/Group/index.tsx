@@ -29,7 +29,6 @@ const GroupPage: React.FC = () => {
         getPlayers(selectedGroup.id);
       }
 
-      console.error(`Grupos carregados com sucesso!`);
     } catch (error) {
       console.error('Erro ao buscar grupos. Tente novamente.', error);
     } finally {

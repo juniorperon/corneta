@@ -36,7 +36,6 @@ const AddPlayer: React.FC = () => {
         getPlayers(Number(groupId));
       }
 
-      console.log(`Grupos carregados com sucesso!`);
     } catch (error) {
       console.error('Erro ao buscar grupos. Tente novamente.', error);
     } finally {
@@ -54,7 +53,6 @@ const AddPlayer: React.FC = () => {
       const response = await api.get(`/player/listPlayers/${groupId}`);
       setPlayers(response.data.data);
 
-      console.log(`Jogadores carregados com sucesso!`);
     } catch (error) {
       console.error('Erro ao buscar jogadores. Tente novamente.', error);
     } finally {

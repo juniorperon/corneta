@@ -1,26 +1,46 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useAppContext } from '../../../context/AppContext';
 import BackButton from '../../../components/BackButton';
 import Button from '../../../components/Button';
 import Select from '../../../components/Select';
 import './styles.css';
 import CardPlayer from '../../../components/CardPlayer';
+import { Pair, Player } from '../../../types';
+import { api } from '../../../services/api';
 
 const DrawPairs: React.FC = () => {
   const { groupId } = useParams();
   const navigate = useNavigate();
-  const { players, pairs } = useAppContext();
 
-  const playersFiltered = players.filter((player) => player.groupId === groupId);
+  const [players, setPlayers] = useState<Player[]>([]);
+  const [pairs, setPairs] = useState<Pair[]>([]);
 
   const [selectedPlayer, setSelectedPlayer] = useState<any>(null);
   const [selectedPlayers, setSelectedPlayers] = useState<any[]>([]);
+
   const [drawPairs, setDrawPairs] = useState<{ id: string, idPartner: string }[]>([]);
+
   const [groups, setGroups] = useState<{ duplas: { id: string, idPartner: string }[] }[]>([]);
   const [numGroups, setNumGroups] = useState<number | null>(null);
+
   const [maxAttempts, setMaxAttempts] = useState<boolean>(false);
   const [attempts, setAttempts] = useState<number>(0);
+
+  useEffect(() => {
+    const fetchPreviousPairs = async () => {
+      try {
+        const response = await api.get(`pair/listPairs?groupId=${Number(groupId)}`);
+
+        const { data } = await response.data
+        setPairs(data);
+        console.log(data)
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchPreviousPairs();
+  }, [groupId]);
 
 
   const handleAddPlayer = () => {
@@ -55,12 +75,11 @@ const DrawPairs: React.FC = () => {
           id: shuffled[i].id,
           idPartner: shuffled[i + 1]?.id,
         };
-        console.log("DUPLA", pair)
 
+        const [low, high] = [pair.id, pair.idPartner].sort();
         if (!random) {
-          const [low, high] = [pair.id, pair.idPartner].sort();
           if (pairs.some(p => {
-            const [existingLow, existingHigh] = [p.id, p.idPartner].sort();
+            const [existingLow, existingHigh] = [p.id, p.partnerId].sort();
             return existingLow === low && existingHigh === high;
           })) {
             isDuplicate = true;
@@ -88,6 +107,7 @@ const DrawPairs: React.FC = () => {
     setNumGroups(null);
   };
 
+
   const handleDrawGroups = () => {
     if (!numGroups || numGroups < 1 || numGroups > drawPairs.length / 2) {
       alert('Escolha um número válido de grupos.');
@@ -113,35 +133,29 @@ const DrawPairs: React.FC = () => {
       alert('Não há duplas para registrar.');
       return;
     }
-    alert('Duplas registradas com sucesso!');
+
     // try {
-    //   const response = await fetch('http://localhost:3000/api/registerPairs', {
+    //   const response = await api.post('/registerPairs', {
     //     method: 'POST',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify({
-    //       pairs: drawPairs,
-    //       groupId, // Envie o ID do grupo se necessário
-    //     }),
+    //     headers: { 'Content-Type': 'application/json' },
+    //     body: JSON.stringify({ pairs: drawPairs, groupId }),
     //   });
 
-    //   if (!response.ok) {
-    //     const error = await response.json();
-    //     throw new Error(error.message || 'Erro desconhecido');
-    //   }
+    //   if (!response) throw new Error('Erro ao registrar duplas');
 
     //   alert('Duplas registradas com sucesso!');
-    //   setDrawPairs([]); // Opcional: Limpa as duplas
-    // } catch (error: any) {
+    //   setPairs([...pairs, ...drawPairs]);
+    //   setDrawPairs([]);
+    // } catch (error) {
     //   console.error(error);
     //   alert(`Erro ao registrar duplas: ${error.message}`);
     // }
   };
 
+
   return (
     <div className="draw-pairs-container">
-      <h1>Sorteio de Pares</h1>
+      <h1>Sorteio de Duplas</h1>
 
       <div className="form-group">
         {/* <Select
@@ -151,7 +165,7 @@ const DrawPairs: React.FC = () => {
           }))}
           value={selectedPlayer?.id || ''}
           onChange={(e) => {
-            const player = playersFiltered.find(p => p.id === e.target.value);
+            const player = playersFiltered.find(p => p.id === Number(e.target.value));
             setSelectedPlayer(player || null);
           }}
           placeholder="Selecione um jogador"
@@ -178,7 +192,7 @@ const DrawPairs: React.FC = () => {
 
       <p>Numero de tentativa: {attempts}</p>
 
-      <Button text="Sortear Duplas" onClick={() => handleDrawPairs(false)} />
+      <Button text="Sortear Duplas" onClick={() => handleDrawPairs(false)} disabled={!selectedPlayers.length} />
       {maxAttempts ?
         <Button text="Sortear Duplas Repetindo" onClick={() => handleDrawPairs(true)} />
         : <></>}

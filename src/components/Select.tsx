@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 interface SelectProps {
-  options: { value: string; label: string }[];
+  options: { value: number; label: string }[];
   value: string;
   onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   placeholder?: string;

@@ -2,7 +2,7 @@ export interface Player {
   id: number;
   name: string;
   points: number;
-  groupId: string;
+  groupId: number;
 }
 
 export interface Group {
@@ -16,11 +16,12 @@ export interface Play {
   id: number;
   name: string;
   points: number;
-  groupId: string;
+  groupId: number;
 }
 
 export interface Pair {
   id: number,
-  idPartner: string
-  groupId: string
+  playerId: number,
+  partnerId: number
+  groupId: number
 }
