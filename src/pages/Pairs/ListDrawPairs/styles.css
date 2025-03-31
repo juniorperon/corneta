@@ -4,7 +4,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
+  height: 100vh;
+  /* Ocupa toda a altura da tela */
   padding: 20px;
   box-sizing: border-box;
 }
@@ -61,23 +62,30 @@ button:hover {
 
 .selected-players {
   text-align: center;
-  width: 100%;
+}
+
+/* Lista de jogadores selecionados */
+.selected-players ul {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0;
   max-width: 400px;
+  /* Limita a largura da lista */
 }
 
-/* Container com scroll para os jogadores selecionados */
-.players-scroll-container {
-  max-height: 200px; /* Define a altura máxima antes do scroll aparecer */
-  overflow-y: auto;  /* Adiciona scroll vertical quando necessário */
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  margin-top: 10px;
+.selected-players li {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 0;
+  border-bottom: 1px solid #ccc;
 }
 
-/* Estilização do CardPlayer dentro do scroll (ajuste conforme necessário) */
-.players-scroll-container .card-player {
-  margin: 5px 0;
+.selected-players li:last-child {
+  border-bottom: none;
+}
+
+.selected-players svg {
+  cursor: pointer;
 }
 
 /* Duplas e Grupos */
@@ -90,6 +98,7 @@ button:hover {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  /* Limita a largura das listas de duplas e grupos */
 }
 
 .pairs ul,
@@ -113,26 +122,4 @@ input[type="number"] {
   width: 50%;
   padding: 5px;
   font-size: 1rem;
-}
-
-.pairs-list {
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  align-items: center;
-}
-
-.pairs-draw-list {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-/* Container para centralizar o botão Gravar Duplas */
-.save-button-container {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
 }

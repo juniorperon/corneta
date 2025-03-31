@@ -93,7 +93,7 @@ const AddPlayer: React.FC = () => {
         <p className={message.includes('sucesso') ? 'success' : 'error'}>{message}</p>
       )}
 
-      <h2>Lista de Jogadores</h2>
+      <h2>Lista de Jogadores: {players.length}</h2>
       <Input value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} placeholder='Pesquisar jogador' />
 
       <ul className="player-list">
